@@ -60,7 +60,7 @@ if __name__ == "__main__":
     if trending_repos is None:
         sys.exit("Ошибка в запросе")
     else:
-        for repo in trending_repos[:top_size_of_repos]:
+        for repo in trending_repos:
             print_repo_info(repo)
             open_issues_amount = get_open_issues_amount(repo)
             print_issues_amount(open_issues_amount)
