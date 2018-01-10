@@ -17,12 +17,10 @@ def get_trending_repositories(top_size):
         "https://api.github.com/search/repositories",
         params=request_params
     )
-    print(response.url)
     if response.ok:
         trending_repos = json.loads(response.content)["items"]
         return trending_repos
     else:
-        print(response.url)
         return None
 
 
