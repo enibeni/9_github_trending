@@ -55,13 +55,12 @@ def print_issues_amount(open_issues_amount):
 
 
 if __name__ == "__main__":
-    count_of_repos_to_show = 20
-    top_size_of_repos = 100
+    top_size_of_repos = 20
     trending_repos = get_trending_repositories(top_size_of_repos)
     if trending_repos is None:
         sys.exit("Ошибка в запросе")
     else:
-        for repo in trending_repos[:count_of_repos_to_show]:
+        for repo in trending_repos[:top_size_of_repos]:
             print_repo_info(repo)
             open_issues_amount = get_open_issues_amount(repo)
             print_issues_amount(open_issues_amount)
