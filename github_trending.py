@@ -42,7 +42,7 @@ def print_repo_info(repo):
     print("Name:{full_name} *:{stars}".format(
         full_name=repo["full_name"],
         stars=repo["stargazers_count"]
-    )
+        )
     )
     print("{}".format(repo["html_url"]))
 
