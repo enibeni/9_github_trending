@@ -7,20 +7,22 @@ import sys
 def get_trending_repositories(top_size):
     today = datetime.date.today()
     week_ago = today - datetime.timedelta(days=7)
-    request_params = (
-        ("q", "created:>{}".format(week_ago)),
-        ("q", "size:<={}".format(top_size)),
-        ("sort", "stars"),
-        ("order", "desc"),
-    )
+    request_params = {
+        "q": "created:>{}".format(week_ago),
+        "sort": "stars",
+        "order": "desc",
+        'per_page': top_size,
+    }
     response = requests.get(
         "https://api.github.com/search/repositories",
         params=request_params
     )
+    print(response.url)
     if response.ok:
         trending_repos = json.loads(response.content)["items"]
         return trending_repos
     else:
+        print(response.url)
         return None
 
 
@@ -42,7 +44,7 @@ def print_repo_info(repo):
     print("Name:{full_name} *:{stars}".format(
         full_name=repo["full_name"],
         stars=repo["stargazers_count"]
-        )
+    )
     )
     print("{}".format(repo["html_url"]))
 
