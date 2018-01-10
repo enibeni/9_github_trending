@@ -7,16 +7,14 @@ import sys
 def get_trending_repositories(top_size):
     today = datetime.date.today()
     week_ago = today - datetime.timedelta(days=7)
-    request_params = {
-        "sort": "stars",
-        "order": "desc"
-    }
+    request_params = (
+        ("q", "created:>{}".format(week_ago)),
+        ("q", "size:<={}".format(top_size)),
+        ("sort", "stars"),
+        ("order", "desc"),
+    )
     response = requests.get(
-        "https://api.github.com/search/repositories"
-        "?q=created:>{date}+size:<={size}".format(
-            date=week_ago,
-            size=top_size
-        ),
+        "https://api.github.com/search/repositories",
         params=request_params
     )
     if response.ok:
@@ -41,12 +39,12 @@ def get_open_issues_amount(repo):
 
 
 def print_repo_info(repo):
-        print("Name:{full_name} *:{stars}".format(
-            full_name=repo["full_name"],
-            stars=repo["stargazers_count"]
-            )
+    print("Name:{full_name} *:{stars}".format(
+        full_name=repo["full_name"],
+        stars=repo["stargazers_count"]
         )
-        print("{}".format(repo["html_url"]))
+    )
+    print("{}".format(repo["html_url"]))
 
 
 def print_issues_amount(open_issues_amount):
@@ -67,4 +65,3 @@ if __name__ == "__main__":
             print_repo_info(repo)
             open_issues_amount = get_open_issues_amount(repo)
             print_issues_amount(open_issues_amount)
-
